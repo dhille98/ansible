@@ -1,0 +1,11 @@
+--- 
+- name: install package
+  hosts: all 
+  become: yes
+  tasks: 
+    - name: install nginx useing apt
+      ansible.builtin.apt: 
+      name: nginx
+      state: "present"
+      update_cache: yes
+      
