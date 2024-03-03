@@ -8,10 +8,10 @@
         msg: "This playbook is designed only for Ubuntu os"
       when: ansible_facts['distribution'] != 'Ubuntu'
     - name: download Microsoft key 
-       ansible.builtin.get_url:
-         src: "{{ microsoft key _url }}"
-         dest: "{{ home_dir }}"
-     - ansible.builtin.debug:
+      ansible.builtin.get_url:
+        src: "{{ microsoft key _url }}"
+        dest: "{{ home_dir }}"
+    - ansible.builtin.debug:
          msg: "Microsoft key  is installed using package {{ microsoft key _url}}"
     - name: Microsoft key dot net
       ansible.builtin.apt:
