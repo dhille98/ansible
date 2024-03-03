@@ -1,0 +1,30 @@
+--- 
+- name: intall application in ubuntu
+  hosts: webserver
+  become: yes
+  tasks:
+    - name: fail for unsuported os
+      ansible.builtin.fail:
+        msg: "This playbook is designed only for Ubuntu os"
+      when: ansible_facts['distribution'] != 'Ubuntu'
+    - name: download Microsoft key 
+       ansible.builtin.get_url:
+         src: "{{ microsoft key _url }}"
+         dest: "{{ home_dir }}"
+     - ansible.builtin.debug:
+         msg: "Microsoft key  is installed using package {{ microsoft key _url}}"
+    - name: Microsoft key dot net
+      ansible.builtin.apt:
+        name: "{{ package1 }}"
+        state: "present"
+    - ansible.builtin.debug:
+         msg: "dotnet is installed using package {{ package1}}"
+    - name: Install the .NET Core Runtime
+      ansible.builtin.apt:
+        name: "{{ dotnet_packages }}"
+        update_cach: yes
+        state: "present"
+        
+      
+      
+    

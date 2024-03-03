@@ -1,0 +1,29 @@
+--- 
+- name: install in apache 
+  hosts: 
+  become: yes
+  tasks:
+    - name: install apache in ubuntu
+      ansible.builtin.apt: 
+        name: apache2
+        update_cache: yes
+        state: "present"
+        when: 
+      ansible.builtin.systemd_service: 
+        name: apache2
+        enabled: yes
+        state: "started"
+        when:
+    tasks:
+    - name: install apache in centos
+      ansible.builtin.dnf: 
+        name: httpd
+        update_cache: yes
+        state: "present"
+        when: 
+      ansible.builtin.systemd_service: 
+        name: httpd
+        enabled: yes
+        state: "started"
+        when:
+        

@@ -1,0 +1,39 @@
+--- 
+- name: install application in os
+  become: yes
+  hosts: webserver
+  tasks:
+    - name: fail for unsuported os
+      ansible.builtin.fail:
+        msg: "This playbook is designed only for Ubuntu os"
+      when: ansible_facts['distribution'] != 'Ubuntu'
+    - name: install apache in ubuntu
+      ansible.builtin.apt:
+        name: "{{ package }}"
+        update_cach: yes
+        state: "present"
+    - name: enable and start apache
+      service:
+        name: "{{ package }}"
+        enabled: yes
+        state: "started"
+    - name: install php in ubuntu
+      ansible.builtin.apt:
+        name: "{{ php_packages }}"
+        state: "present"
+    - name: apache restarted
+      service:
+        name: "{{ package }}"
+        enabled: yes
+        state: "restarted"
+    - name: copy to info.php
+      copy: 
+        src: info.php
+        dest: /var/www/html/info.php
+    - name: apache restarted
+      service:
+        name: "{{ package }}"
+        enabled: yes
+        state: "restarted"
+       
+      
