@@ -6,3 +6,4 @@ package1: packages-microsoft-prod.deb
 dotnet_packages: 
   - apt-transport-https
   - aspnetcore-runtime-7.0
+ng_package: nginx
