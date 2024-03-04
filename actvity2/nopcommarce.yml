@@ -33,7 +33,7 @@
         name: "{{ dotnet_packages }}"
         state: "present"
     - ansible.builtin.debug:
-        msg: "dotnet is installed using package {{ dotnet_package}}"
+        msg: "dotnet is installed using package "
     - name: install in inginx webserver
       ansible.builtin.apt:
         name: "{{ ng_package }}"
