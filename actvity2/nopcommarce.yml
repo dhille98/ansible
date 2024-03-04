@@ -34,7 +34,26 @@
       ansible.builtin.apt:
         name: "{{ ng_package }}"
         state: "present"
-    
-      
-      
-    
+    - name: nginx service file enabled
+      ansible.builtin.service: 
+        name: "{{ ng_package }}"
+        enabled: yes
+        state: "started"
+    - name: Create a directory 
+      ansible.builtin.file:
+        path: /var/www/nopCommerce
+        state: directory
+        mode: '0755'
+    - name: nop commerce install from a URL
+      ansible.builtin.get_url:
+        url: "{{ nop_url }}"
+        dest: "/tmp"
+    - name: install in unzip install
+      ansible.builtin.apt:
+        name: "{{ unzip_package }}"
+        state: "present"
+    - name: Unarchive a file that is already on the remote machine
+      ansible.builtin.unarchive:
+        src: /tmp/nopCommerce_4.60.6_NoSource_linux_x64.zip
+        dest: /var/www/nopCommerce
+        remote_src: yes
