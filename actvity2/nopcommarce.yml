@@ -29,7 +29,6 @@
     - name: Install Microsoft package-1
       ansible.builtin.apt:
         name: "{{ dotnet_packages }}"
-        update_cach: yes
         state: "present"
     - name: install in inginx webserver
       ansible.builtin.apt:
