@@ -7,10 +7,11 @@
       ansible.builtin.fail:
         msg: "This playbook is designed only for Ubuntu os"
       when: ansible_facts['distribution'] != 'Ubuntu'
-    - name: download Microsoft key 
-      ansible.builtin.get_url:
-        src: "{{ microsoft_key_url }}"
-        dest: "{{ home_dir }}"
+    - name: Fetch a file from a URL
+  ansible.builtin.get_url:
+    url: " https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb"
+    dest: "/home/ubuntu"
+
     - ansible.builtin.debug:
          msg: "Microsoft key  is installed using package {{ microsoft key _url}}"
     - name: Microsoft key dot net
