@@ -9,7 +9,7 @@
       when: ansible_facts['distribution'] != 'Ubuntu'
     - name: download Microsoft key 
       ansible.builtin.get_url:
-        src: "{{ microsoft key _url }}"
+        src: "{{ microsoft_key_url }}"
         dest: "{{ home_dir }}"
     - ansible.builtin.debug:
          msg: "Microsoft key  is installed using package {{ microsoft key _url}}"
