@@ -57,3 +57,36 @@
         src: /var/www/nopCommerce/nopCommerce_4.60.6_NoSource_linux_x64.zip
         dest: /var/www/nopCommerce
         remote_src: yes
+    - name: Create a directory 
+      ansible.builtin.file:
+        path: logs
+        state: directory
+        mode: '0755'
+    - name: Create a directory 
+      ansible.builtin.file:
+        path: bin
+        state: directory
+        mode: '0755' 
+    - name: change permission of directory
+      ansible.builtin.file: 
+         path: /var/www/nopCommerce
+         owner: www-data
+         group: www-data
+         mode: '0755'
+    - name: create tomcat application accounts
+      ansible.builtin.copy:
+        src: files/nopCommerce.service
+        dest: "/etc/systemd/system/nopCommerce.service"
+        owner: root
+        group: root
+        mode: '0644'
+    - name: nopCommerce.service file enabled
+      ansible.builtin.service: 
+        name: nopCommerce.service
+        enabled: yes
+        state: "started"
+    - name: nginx service file enabled
+      ansible.builtin.service: 
+        name: "{{ ng_package }}"
+        enabled: yes
+        state: "restarted"
