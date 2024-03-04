@@ -1,4 +1,4 @@
---- 
+---
 - name: intall application in ubuntu
   hosts: webserver
   become: yes
@@ -9,17 +9,23 @@
       when: ansible_facts['distribution'] != 'Ubuntu'
     - name: Fetch a file from a URL
       ansible.builtin.get_url:
-        url: " https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb"
-        dest: "/home/ubuntu"
+        url: " https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb "
+        dest: "/home/dell"
     - ansible.builtin.debug:
-         msg: "Microsoft key  is installed using package {{ microsoft key _url}}"
-    - name: Microsoft key dot net
-      ansible.builtin.apt:
-        name: "{{ package1 }}"
-        state: "present"
+         msg: "Microsoft key  is installed using package "
+    - name: Install Microsoft package
+      ansible.builtin.command:
+        cmd: dpkg -i packages-microsoft-prod.deb
     - ansible.builtin.debug:
          msg: "dotnet is installed using package {{ package1}}"
-    - name: Install the .NET Core Runtime
+    - name: Update package cache
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install Microsoft package
+      ansible.builtin.apt:
+        deb: /home/dell/packages-microsoft-prod.deb
+        state: present
       ansible.builtin.apt:
         name: "{{ dotnet_packages }}"
         update_cach: yes
