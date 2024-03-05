@@ -41,7 +41,7 @@
         owner: "{{ user_name }}"
         remote_src: yes
     - ansible.builtin.debug:
-        msg: download tomcat url "{{ tomcat_url }}"
+        msg: download tomcat url "
     - name: change the directory ownership to tomcat
       find: 
         paths: "/opt/tomcat/apache-tomcat-10.0.10/bin"
