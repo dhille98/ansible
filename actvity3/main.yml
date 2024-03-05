@@ -28,9 +28,29 @@
         shell: "{{ user_shell }}"
     - ansible.builtin.debug:
         msg: created user called "{{ user_name}}"
-    - name: download the tomcat
-      ansible.builtin.get_url: 
-        url: "{{ tomcat_url }}"
-        dest: /tmp/apache-tomcat-10.0.10.tar.gz
-
+    #- name: download the tomcat
+     # ansible.builtin.get_url: 
+      #  url: "{{ tomcat_url }}"
+       # dest: /tmp/apache-tomcat-10.0.10.tar.gz
+    #- ansible.builtin.debug:
+     #   msg: download tomcat url "{{ tomcat_url }}"
+    - name: untar tomcat file 
+      ansible.builtin.unarchive:
+        src: "{{ tomcat_url }}"
+        dest: "{{ home_dir }}"
+        owner: "{{ user_name }}"
+        remote_src: yes
+    - ansible.builtin.debug:
+        msg: download tomcat url "{{ tomcat_url }}"
+    - name: change the directory ownership to tomcat
+      find: 
+        paths: "/opt/tomcat/apache-tomcat-10.0.10/bin"
+        patterns: '*.sh'
+      register: shell_files
+      file: 
+         path: "{{ item.path }}"
+         owner: "{{ user_name }}"
+         group: "{{ group_name }}"
+         mode: '755'
+      loop: "{{ shell_files }}"
   
