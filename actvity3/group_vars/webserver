@@ -3,4 +3,4 @@ group_name: tomcat
 user_name: tomcat
 home_dir: /opt/tomcat
 user_shell: '/bin/false'
-tomacat_url: https://archive.apache.org/dist/tomcat/tomcat-10/v10.0.10/bin/apache-tomcat-10.0.10.tar.gz
+tomcat_url: https://archive.apache.org/dist/tomcat/tomcat-10/v10.0.10/bin/apache-tomcat-10.0.10.tar.gz
