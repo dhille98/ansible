@@ -1,0 +1,36 @@
+--- 
+- name: install tomcat in ubuntu os
+  hosts: all
+  become: yes
+  tasks: 
+    name : fail for unsuported os
+    ansible.builtin.fail:
+      msg: "This playbook is designed only for Ubuntu os"
+    when: ansible_facts[‘distribution’] != 'ubuntu'
+    name: install java package 
+    ansible.builtin.apt: 
+      name: "{{ package }}"
+      update_cache: yes
+      state: "present"
+  - ansible.builtin.debug:
+      msg: install package "{{ package }}"
+    name: create group with tomcat
+    ansible.builtin.group: 
+      name: "{{ group_name }}"
+      state: "present"
+  - ansible.builtin.debug:
+      msg: created group called "{{ group_name}}"
+    name: crate user with tomcat
+    ansible.builtin.user:
+      group: "{{ group_name }}"
+      name: "{{ user_name }}"
+      home: "{{ home_dir }}"
+      shell: "{{ user_shell }}"
+  - ansible.builtin.debug:
+      msg: created user called "{{ user_name}}"
+    name: download the tomcat
+    ansible.builtin.get_url: 
+      url: "{{ tomcat_url }}"
+      dest: /tmp/apache-tomcat-10.0.10.tar.gz
+
+  
