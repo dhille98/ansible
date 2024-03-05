@@ -6,7 +6,7 @@
     - name : fail for unsuported os
       ansible.builtin.fail:
         msg: "This playbook is designed only for Ubuntu os"
-      when: ansible_facts[‘distribution’] != 'ubuntu'
+      when: ansible_facts['distribution'] != 'ubuntu'
     - name: install java package 
       ansible.builtin.apt: 
         name: "{{ package }}"
