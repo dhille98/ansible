@@ -3,7 +3,7 @@
   hosts: all
   become: yes
   tasks: 
-    - name: fail for unsuported os
+    - name: fail for unsupported os
       ansible.builtin.fail:
         msg: "This playbook is designed only for Ubuntu os"
       when: ansible_facts['distribution'] != 'Ubuntu'
