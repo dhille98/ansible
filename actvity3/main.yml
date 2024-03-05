@@ -42,15 +42,16 @@
         remote_src: yes
     - ansible.builtin.debug:
         msg: download tomcat url "{{ tomcat_url }}"
-    - name: change the directory ownership to tomcat
-      find: 
-        paths: /opt/tomcat/apache-tomcat-10.0.10/bin
+    - name: find all the shell files
+      find:
+        paths: "/opt/tomcat/apache-tomcat-10.0.10/bin"
         patterns: '*.sh'
       register: shell_files
-      file: 
-         path: "{{ item.path }}"
-         owner: "{{ user_name }}"
-         group: "{{ group_name }}"
-         mode: "755"
-      loop: "{{ shell_files }}"
+    - name: change permissions to execute
+      file:
+        path: "{{ item.path }}"
+        owner: "{{ user }}"
+        group: "{{ group }}"
+        mode: "755"
+      loop: "{{ shell_files.files }}"
   
