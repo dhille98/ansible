@@ -50,8 +50,8 @@
     - name: change permissions to execute
       file:
         path: "{{ item.path }}"
-        owner: "{{ user }}"
-        group: "{{ group }}"
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
         mode: "755"
       loop: "{{ shell_files.files }}"
   
