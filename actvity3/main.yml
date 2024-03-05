@@ -41,16 +41,16 @@
         owner: "{{ user_name }}"
         remote_src: yes
     - ansible.builtin.debug:
-        msg: download tomcat url "
+        msg: download tomcat url "{{ tomcat_url }}"
     - name: change the directory ownership to tomcat
       find: 
-        paths: "/opt/tomcat/apache-tomcat-10.0.10/bin"
+        paths: /opt/tomcat/apache-tomcat-10.0.10/bin
         patterns: '*.sh'
       register: shell_files
       file: 
          path: "{{ item.path }}"
          owner: "{{ user_name }}"
          group: "{{ group_name }}"
-         mode: '755'
+         mode: "755"
       loop: "{{ shell_files }}"
   
