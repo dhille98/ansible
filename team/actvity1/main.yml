@@ -1,0 +1,28 @@
+- name: nopcommarce install application
+  hosts: webserver
+  become: yes
+  tasks:
+    - name: os fail
+      ansible.builtin.fail: 
+      ansible.builtin.fail:
+        msg: "This playbook is designed only for Ubuntu os"
+      when: ansible_facts['distribution'] != 'Ubuntu'
+    - name: download pkg packages-microsoft-prod
+      ansible.builtin.get_url:
+      url: "{{ microsoft_url }}"
+      dest: "{{ home_dir }}"
+    - ansible.builtin.debug:
+         msg: "Microsoft key  is download using package "
+    - name: install dkpg in microsoft
+      ansible.builtin.dpkg_selections:
+        name: "{{ dpkg_down }}"
+        selection: "install"
+    - ansible.builtin.debug:
+         msg: "Microsoft key  is install using url "
+    - name: Install the .NET Core Runtime
+      ansible.builtin.apt:
+      name: "{{ packages }}"
+      state: "present""
+      update_cache: yes
+    
+      
