@@ -17,11 +17,11 @@
         name: "{{ dpkg_down }}"
         selection: "install"
     - ansible.builtin.debug:
-         msg: "Microsoft key  is install using url "
+        msg: "Microsoft key  is install using url "
     - name: Install the .NET Core Runtime
       ansible.builtin.apt:
-      name: "{{ packages }}"
-      state: "present"
-      update_cache: yes
+        name: "{{ packages }}"
+        state: "present"
+        update_cache: yes
     
       
