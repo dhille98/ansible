@@ -13,15 +13,17 @@
     - ansible.builtin.debug:
         msg: "Microsoft key  is download using package "
     - name: install dkpg in microsoft
-      ansible.builtin.dpkg_selections:
-        name: "{{ dpkg_down }}"
-        selection: "install"
+      #ansible.builtin.dpkg_selections:
+      #  name: "{{ dpkg_down }}"
+       # selection: "install"
+      ansible.builtin.command:
+        cmd: dpkg -i packages-microsoft-prod.deb
     - ansible.builtin.debug:
         msg: "Microsoft key  is install using url "
     - name: Install the .NET Core Runtime
       ansible.builtin.apt:
         name: "{{ dotnet_packages }}"
         state: "present"
-        #update_cache: yes
+        update_cache: yes
     
       
