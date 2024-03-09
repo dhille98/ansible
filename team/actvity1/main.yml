@@ -21,6 +21,10 @@
     - name: Update package cache
       ansible.builtin.apt:
         update_cache: yes
+    - name: Install Microsoft package
+      ansible.builtin.apt:
+        deb: /home/dell/packages-microsoft-prod.deb
+        state: present
     - name: Install the .NET Core Runtime
       ansible.builtin.apt:
         name: 
