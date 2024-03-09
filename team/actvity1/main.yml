@@ -21,7 +21,7 @@
     - name: Install the .NET Core Runtime
       ansible.builtin.apt:
       name: "{{ packages }}"
-      state: "present""
+      state: "present"
       update_cache: yes
     
       
