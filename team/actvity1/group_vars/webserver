@@ -3,5 +3,4 @@ home_dir: /home/ubuntu
 dpkg_down: packages-microsoft-prod.deb
 dotnet_packages: 
   - apt-transport-https
-  - dotnet-sdk-7.0
-  #- aspnetcore-runtime-7.0
+  - aspnetcore-runtime-7.0
