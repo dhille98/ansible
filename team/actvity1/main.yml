@@ -2,8 +2,7 @@
   hosts: webserver
   become: yes
   tasks:
-    - name: os fail
-      ansible.builtin.fail: 
+    - name: os fail 
       ansible.builtin.fail:
         msg: "This playbook is designed only for Ubuntu os"
       when: ansible_facts['distribution'] != 'Ubuntu'
