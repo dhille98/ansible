@@ -16,6 +16,7 @@
     - name: Install Microsoft package
       ansible.builtin.command:
         cmd: dpkg -i packages-microsoft-prod.deb
+    
     - ansible.builtin.debug:
          msg: "Microsoft key  is installed using package "
     - name: Update package cache

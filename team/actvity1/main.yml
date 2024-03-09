@@ -1,14 +1,26 @@
 - name: nopcommarce install application
-  hosts: webserver
+  hosts: all
   become: yes
   tasks:
     - name: os fail 
       ansible.builtin.fail:
         msg: "This playbook is designed only for Ubuntu os"
       when: ansible_facts['distribution'] != 'Ubuntu'
-    - name: Install prince
-     apt:
-         deb: "{{microsoft_url}}"
-         dpkg_options: packages-microsoft-prod.deb
+    - name: Fetch a file from a URL
+      ansible.builtin.get_url:
+        url: " https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb "
+        dest: "/home/dell"
+    - name: Install Microsoft package
+      ansible.builtin.command:
+        cmd: dpkg -i packages-microsoft-prod.deb
+    - name: install asp_dotnet.runtime 
+      ansible.builtin.apt: 
+        name:  
+          - apt-transport-https 
+          - aspnetcore-runtime-7.0 
+          - dotnet-sdk-7.0 
+          - unzip 
+        update_cache: yes 
+        state: present
     
       
