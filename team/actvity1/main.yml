@@ -6,31 +6,9 @@
       ansible.builtin.fail:
         msg: "This playbook is designed only for Ubuntu os"
       when: ansible_facts['distribution'] != 'Ubuntu'
-    - name: download pkg packages-microsoft-prod
-      ansible.builtin.get_url:
-        url: "{{ microsoft_url }}"
-        dest: "{{ home_dir }}"
-    - ansible.builtin.debug:
-        msg: "Microsoft key  is download using package "
-    - name: install dkpg in microsoft
-      ansible.builtin.dpkg_selections:
-        name: "{{ dpkg_down }}"
-        selection: "install"
-    - ansible.builtin.debug:
-        msg: "Microsoft key  is install using url "
-    - name: Update package cache
-      ansible.builtin.apt:
-        update_cache: yes
-    - name: Install Microsoft package
-      ansible.builtin.apt:
-        deb: /home/dell/packages-microsoft-prod.deb
-        state: present
-    - name: Install the .NET Core Runtime
-      ansible.builtin.apt:
-        name: 
-          - apt-transport-https
-          - aspnetcore-runtime-7.0
-        state: "present"
-        update_cache: yes
+    - name: Install prince
+     apt:
+         deb: https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
+         dpkg_options: packages-microsoft-prod.deb
     
       
