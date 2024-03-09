@@ -18,6 +18,9 @@
         selection: "install"
     - ansible.builtin.debug:
         msg: "Microsoft key  is install using url "
+    - name: Update package cache
+      ansible.builtin.apt:
+        update_cache: yes
     - name: Install the .NET Core Runtime
       ansible.builtin.apt:
         name: 
