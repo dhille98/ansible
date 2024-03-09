@@ -20,7 +20,7 @@
         msg: "Microsoft key  is install using url "
     - name: Install the .NET Core Runtime
       ansible.builtin.apt:
-        name: "{{ packages }}"
+        name: "{{ dotnet_packages }}"
         state: "present"
         update_cache: yes
     
