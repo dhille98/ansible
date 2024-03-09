@@ -8,10 +8,10 @@
       when: ansible_facts['distribution'] != 'Ubuntu'
     - name: download pkg packages-microsoft-prod
       ansible.builtin.get_url:
-      url: "{{ microsoft_url }}"
-      dest: "{{ home_dir }}"
+        url: "{{ microsoft_url }}"
+        dest: "{{ home_dir }}"
     - ansible.builtin.debug:
-         msg: "Microsoft key  is download using package "
+        msg: "Microsoft key  is download using package "
     - name: install dkpg in microsoft
       ansible.builtin.dpkg_selections:
         name: "{{ dpkg_down }}"
