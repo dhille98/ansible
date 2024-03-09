@@ -8,7 +8,7 @@
       when: ansible_facts['distribution'] != 'Ubuntu'
     - name: Install prince
      apt:
-         deb: https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
+         deb: "{{microsoft_url}}"
          dpkg_options: packages-microsoft-prod.deb
     
       
