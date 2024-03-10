@@ -42,10 +42,10 @@
         mode: '0755'
     - name: change permission of directory
       ansible.builtin.file: 
-         path: /var/www/nopCommerce
-         owner: "{{ user }}"
-         group: "{{ group }}"
-         mode: '0755'
+        path: /var/www/nopCommerce
+        owner: "{{ user }}"
+        group: "{{ group }}"
+        mode: '0755'
     - name: create nop service file 
       ansible.builtin.copy:
         src: files/nopCommerce.service
