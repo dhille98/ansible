@@ -13,7 +13,7 @@
         dest: "{{ home_dir }}"
     - name: useing cmd
       ansible.builtin.command:
-        cmd: dpkg -i /home/ubuntu/packages-microsoft-prod.deb
+        cmd: dpkg -i/home/ubuntu/packages-microsoft-prod.deb
     - name: install dotnet
       ansible.builtin.apt:
         name: "{{ dotnet_packages }}"
@@ -30,15 +30,17 @@
         path: /var/www/nopCommerce
         state: directory
         mode: '0755'
-    - name: download NopCommerce
+    - name: unzip nopcommerce file 
       ansible.builtin.get_url:
-        url: https://github.com/nopSolutions/nopCommerce/releases/download/release-4.60.6/nopCommerce_4.60.6_NoSource_linux_x64.zip
-        dest: /nopCommerce_4.60.5_NoSource_linux_x64.zip
-    - name: unzip the NopCommerce
       ansible.builtin.unarchive:
-        src: /nopCommerce_4.60.5_NoSource_linux_x64.zip
-        dest: /var/www/nopCommerce
-        remote_src: yes
+        src: "{{ nop_url }}"
+        dest: "{{ down_path }}"
+    - name: unzip the nop
+      ansible.builtin.unarchive:
+        src: "{{ down_path }}"
+        dest: "{{ src_path }}"
+        remote_src: yes  
+    - name: Create a directory 
       ansible.builtin.file:
         path: "{{ create_directory }}"
         state: directory
