@@ -32,7 +32,6 @@
         mode: '0755'
     - name: unzip nopcommerce file 
       ansible.builtin.get_url:
-      ansible.builtin.unarchive:
         src: "{{ nop_url }}"
         dest: "{{ down_path }}"
     - name: unzip the nop
