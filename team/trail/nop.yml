@@ -13,7 +13,7 @@
         dest: "{{ home_dir }}"
     - name: useing cmd
       ansible.builtin.command:
-        cmd: "{{ package1 }}"
+        cmd: dpkg -i /home/ubuntu/packages-microsoft-prod.deb
     - name: install dotnet
       ansible.builtin.apt:
         name: "{{ dotnet_packages }}"
