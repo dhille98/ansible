@@ -11,7 +11,7 @@ ng_packages:
   - unzip
 nop_url: https://github.com/nopSolutions/nopCommerce/releases/download/release-4.60.6/nopCommerce_4.60.6_NoSource_linux_x64.zip
 down_path: /home/ubuntu/nopCommerce_4.60.6_NoSource_linux_x64.zip
-src_path: /var/www/nopCommerce/nopCommerce_4.60.6_NoSource_linux_x64.zip
+dest_path: /var/www/nopCommerce/
 create_directory: 
   - /var/www/nopCommerce/logs
   - /var/www/nopCommerce/bin

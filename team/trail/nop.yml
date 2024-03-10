@@ -37,7 +37,7 @@
     - name: unzip the nop
       ansible.builtin.unarchive:
         src: "{{ down_path }}"
-        dest: "{{ src_path }}"
+        dest: "{{ dest_path }}"
         remote_src: yes  
     - name: Create a directory 
       ansible.builtin.file:
