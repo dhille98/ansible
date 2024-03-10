@@ -32,8 +32,8 @@
         mode: '0755'
     - name: download NopCommerce
       ansible.builtin.get_url:
-        url: "https://github.com/nopSolutions/nopCommerce/releases/download/release-4.60.6/nopCommerce_4.60.6_NoSource_linux_x64.zip"
-        dest: "/nopCommerce_4.60.5_NoSource_linux_x64.zip"
+        url: https://github.com/nopSolutions/nopCommerce/releases/download/release-4.60.6/nopCommerce_4.60.6_NoSource_linux_x64.zip
+        dest: /nopCommerce_4.60.5_NoSource_linux_x64.zip
     - name: unzip the NopCommerce
       ansible.builtin.unarchive:
         src: /nopCommerce_4.60.5_NoSource_linux_x64.zip
