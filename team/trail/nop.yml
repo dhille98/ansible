@@ -61,6 +61,7 @@
     - name: start nopcommerce
       ansible.builtin.service:
         name: nopCommerce.service
+        enabled: yes
         state:  restarted
     - name: Restart service nginx, in all cases
       ansible.builtin.service:
