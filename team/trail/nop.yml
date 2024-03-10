@@ -55,13 +55,11 @@
         mode: '0644'
       notify:
         - start nopcommerce
-      handlers:
-        - name: start nopcommerce
-          ansible.builtin.service:
-            name: nopCommerce.service
-            state: start
-      handlers:
-       - name: restart nginx
-         ansible.builtin.service:
-           name: "{{ ng_package }}"
-           state: restarted
+  handlers:
+    - name: - restart nginx
+      ansible.builtin.service:
+        name: nginx
+        state: restart
+  
+     
+  
