@@ -23,8 +23,6 @@
       ansible.builtin.apt:
         name: "{{ ng_packages }}"
         state: "present"
-      notify:
-        - restart nginx
     - name: Create a directory 
       ansible.builtin.file:
         path: /var/www/nopCommerce
@@ -64,11 +62,10 @@
       ansible.builtin.service:
         name: nopCommerce.service
         state: start
-  handlers:
-    - name: restart nginx
+    - name: Restart service nginx, in all cases
       ansible.builtin.service:
         name: nginx
-        state: restart
+        state: restarted
   
      
   
