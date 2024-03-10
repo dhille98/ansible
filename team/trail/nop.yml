@@ -13,4 +13,55 @@
         dest: "{{ home_dir }}"
     - name: useing cmd
       ansible.builtin.command:
-        cmd: dpkg -i "{{ package1 }}"
+        cmd: "{{ package1 }}"
+    - name: install dotnet
+      ansible.builtin.apt:
+        name: "{{ dotnet_packages }}"
+        update_cache: yes
+        state: "present"
+    - name: install in inginx webserver
+      ansible.builtin.apt:
+        name: "{{ ng_packages }}"
+        state: "present"
+      notify:
+        - restart nginx
+    - name: Create a directory 
+      ansible.builtin.file:
+        path: /var/www/nopCommerce
+        state: directory
+        mode: '0755'
+    - name: unzip nopcommerce file 
+      ansible.builtin.unarchive:
+        src: "{{ nop_url }}"
+        dest: "{{ down_path }}"
+        remote_src: yes  
+    - name: Create a directory 
+      ansible.builtin.file:
+        path: "{{ create_directory }}"
+        state: directory
+        mode: '0755'
+    - name: change permission of directory
+      ansible.builtin.file: 
+         path: /var/www/nopCommerce
+         owner: "{{ user }}"
+         group: "{{ group }}"
+         mode: '0755'
+    - name: create nop service file 
+      ansible.builtin.copy:
+        src: files/nopCommerce.service
+        dest: "/etc/systemd/system/nopCommerce.service"
+        owner: root
+        group: root
+        mode: '0644'
+      notify:
+        - start nopcommerce
+      handlers:
+        - name: start nopcommerce
+          ansible.builtin.service:
+            name: nopCommerce.service
+            state: start
+      handlers:
+       - name: restart nginx
+         ansible.builtin.service:
+           name: "{{ ng_package }}"
+           state: restarted
