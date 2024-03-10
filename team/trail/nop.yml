@@ -56,7 +56,7 @@
       notify:
         - start nopcommerce
   handlers:
-    - name: - restart nginx
+    - name: restart nginx
       ansible.builtin.service:
         name: nginx
         state: restart
