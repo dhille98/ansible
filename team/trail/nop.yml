@@ -32,7 +32,7 @@
         mode: '0755'
     - name: unzip nopcommerce file 
       ansible.builtin.get_url:
-        src: "{{ nop_url }}"
+        src: https://github.com/nopSolutions/nopCommerce/releases/download/release-4.60.6/nopCommerce_4.60.6_NoSource_linux_x64.zip
         dest: "{{ down_path }}"
     - name: unzip the nop
       ansible.builtin.unarchive:
