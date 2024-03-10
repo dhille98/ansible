@@ -39,7 +39,12 @@
         remote_src: yes  
     - name: Create a directory 
       ansible.builtin.file:
-        path: "{{ create_directory }}"
+        path: logs
+        state: directory
+        mode: '0755'
+    - name: Create a directory 
+      ansible.builtin.file:
+        path: logs
         state: directory
         mode: '0755'
     - name: change permission of directory
