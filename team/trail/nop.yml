@@ -49,7 +49,7 @@
     - name: create nop service file 
       ansible.builtin.copy:
         src: files/nopCommerce.service
-        dest: "/etc/systemd/system/nopCommerce.service"
+        dest: /etc/systemd/system/nopCommerce.service
         owner: root
         group: root
         mode: '0644'
