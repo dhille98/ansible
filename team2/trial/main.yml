@@ -1,84 +1,99 @@
 --- 
-- name: install nop commerce
+- name: install nopcommerce on ubuntu 
   hosts: webserver
   become: yes
   tasks:
-    - name: fail for unsuported os
-      ansible.builtin.fail:
-        msg: "This playbook is designed only for Ubuntu os"
+    - name: fail for unsupported os family 
+      ansible.builtin.fail: 
+        msg: this works only on Ubuntu os
       when: ansible_facts['distribution'] != 'Ubuntu'
-    - name: Fetch a file from a URL
+    - name: install microsoft packages 
       ansible.builtin.get_url:
-        url: https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb 
-        dest: /home/ubuntu/packages-microsoft-prod.deb
-    - name: useing cmd
-      ansible.builtin.command:
-        cmd: dpkg -i /home/ubuntu/packages-microsoft-prod.deb
-    - name: install dot net application
+        url: "{{ microsoft_url }}"
+        dest: /home/ubuntu/packages-microsoft-prod.deb 
+    -  name: microsoft prod 
+       ansible.builtin.command: "{{ dpkg_package }}"
+    -  name: install packages 
+       ansible.builtin.apt:
+         name: "{{ package_name }}"
+         update_cache: yes
+         state: present
+    - name: install nginx
       ansible.builtin.apt:
-        name: "{{ dot_package }}"
-        update_cache: yes
-        state: "present"
-    # install nginx
-    - name: Create a directory if it does not exist
-      ansible.builtin.file:
-        path: /var/www/nopCommerce
-        state: directory
-        mode: '0755' 
-    - name: download nop application
-      ansible.builtin.get_url:
-        url: https://github.com/nopSolutions/nopCommerce/releases/download/release-4.60.6/nopCommerce_4.60.6_NoSource_linux_x64.zip
-        dest: /home/ubuntu/nopCommerce_4.60.6_NoSource_linux_x64.zip
-    - name: unzip nop application
-      ansible.builtin.unarchive: 
-        src: /home/ubuntu/nopCommerce_4.60.6_NoSource_linux_x64.zip
-        dest: /var/www/nopCommerce
-        remote_src: yes
-    - name: create a group
-      ansible.builtin.group:
-        name: nop
-        state: "present"
-    - name: create user nop
-      ansible.builtin.user: 
-        name: nop
-        group: nop
-        state: "present"
-    - name: Create a directory 
-      ansible.builtin.file:
-        path: /var/www/nopCommerce/logs
-        state: directory
-        owner: nop
-        group: nop
-        mode: '0755'
-    - name: Create a directory 
-      ansible.builtin.file:
-        path: /var/www/nopCommerce/bin
-        owner: nop
-        group: nop
-        state: directory
-        mode: '0755' 
-    - name: change permission of directory
-      ansible.builtin.file: 
-        path: /var/www/nopCommerce
-        owner: nop
-        group: nop
-        mode: '0755'
-    - name: create nop service file 
-      ansible.builtin.template:
-        src: files/nopcommerce.service.j2
-        dest: /etc/systemd/system/nopCommerce.service
-        owner: root
-        group: root
-        mode: '0644'
-        remote_src: yes
+        name: "{{ package }}"
+        state: present
       notify:
-        - start nopcommerce
-  handlers:
-    - name: start nopcommerce
+        - start nginx 
+    - name: create a directory 
+      ansible.builtin.file:
+        path: "/var/nop/nopCommerce"
+        state: directory
+    - name: Install unzip package
+      become: yes
+      apt:
+        name: unzip
+        state: present
+    - name: create user 
+      ansible.builtin.user:
+        name: "{{ nop_owner }}"
+        state: present 
+    - name: create group 
+      ansible.builtin.group:
+        name: "{{ nop_group }}"
+        state: present 
+    - name: download zip 
+      ansible.builtin.get_url:
+        url: "{{ nop_package }}"
+        dest: "/var/nop/nopCommerce"
+    - name: Extract the archive
+      ansible.builtin.unarchive:
+        src: "{{ nop_package }}"
+        dest: "/var/nop/nopCommerce"
+        owner: "{{ nop_owner }}"
+        group: "{{ nop_group }}"
+        remote_src: yes
+      become: yes
+    - name: check the file exists
+      ansible.builtin.stat:
+        path: "/var/nop/nopCommerce"
+    - name: create a directory 
+      ansible.builtin.file:
+        path: "/var/nop/nopCommerce/bin" 
+        state: directory
+        mode: '0755'
+    - name: create a directory 
+      ansible.builtin.file:
+        path: "/var/nop/nopCommerce/logs" 
+        state: directory
+        mode: '0755'
+    - name: changing ownership 
+      ansible.builtin.file:
+        path: "/var/nop/nopCommerce"
+        owner: "{{ nop_owner }}"
+        group: "{{ nop_group }}"
+        recurse: true
+        mode: '0755'
+    - name: adding templates
+      ansible.builtin.template:
+        src: "templates/nopcommerce.j2"
+        dest: "/etc/systemd/system/nopCommerce.service"
+        owner: "{{ nop_owner }}"
+        group: "{{ nop_group }}"
+      notify:
+        - start nopCommerce
+        - restart nginx
+  handlers: 
+    - name: start nginx
       ansible.builtin.service:
-        name: nopCommerce.service
-        enabled: yes
-        state:  restarted
-    
-         
-      
+        name: nginx
+        state: started
+    - name: start nopCommerce 
+      ansible.builtin.systemd:
+        name: nopCommerce 
+        daemon_reload: true
+        enabled: true 
+        state: started
+    - name: restart nginx 
+      ansible.builtin.service:
+        name: nginx  
+        state: restarted
