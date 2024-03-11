@@ -1,0 +1,4 @@
+dot_package: 
+  - apt-transport-https
+  - aspnetcore-runtime-7.0
+  - unzip
